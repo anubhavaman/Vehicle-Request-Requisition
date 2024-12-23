@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h3 {
+      color: #333;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+      resize: vertical;
+    }
+
+    input[type="submit"] {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #218838;
+    }
+
+    input[type="submit"]:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    #success-message {
+      display: none;
+      color: #28a745;
+      text-align: center;
+      margin-top: 10px;
+    }
+    #leftImage{
+      width: 200px; /* Adjust size as needed */
+      height: auto;
+      margin-bottom: 10px;
+      margin-left: 175px;
+    }
+
+    #error-message {
+      display: none;
+      color: #dc3545; /* Bootstrap danger color */
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img id="leftImage" src="https://drive.google.com/thumbnail?id=1XV6OccNww2t-qBXs7CKH6dHSnGuW8SJe&sz=s4000" alt="Left Image">
+    <h3>Vehicle Request Approval/Rejection</h3>
+    <form id="adminForm">
+      <label for="comments">Comments:</label>
+      <textarea id="comments" name="comments" rows="4" placeholder="Enter your comments here..." required></textarea>
+      <input type="hidden" id="action" name="action" value="<?= action ?>" />
+      <input type="hidden" id="row" name="row" value="<?= row ?>" />
+      <input type="submit" value="Submit" />
+    </form>
+    <div id="success-message">Form submitted successfully!</div>
+    <div id="error-message">An error occurred. Please try again.</div>
+  </div>
+
+  <script>
+    document.getElementById('adminForm').onsubmit = function(e) {
+      e.preventDefault();
+      
+      var form = this;
+      var submitButton = form.querySelector('input[type="submit"]');
+      var successMessage = document.getElementById('success-message');
+      var errorMessage = document.getElementById('error-message');
+      
+      // Disable the submit button and change its text
+      submitButton.disabled = true;
+      submitButton.value = 'Submitting...';
+      
+      // Hide any previously displayed messages
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+
+      google.script.run
+        .withSuccessHandler(function(response) {
+          // Re-enable the submit button and restore its text
+          submitButton.disabled = false;
+          submitButton.value = 'Submit';
+          
+          // Display the success message
+          successMessage.style.display = 'block';
+          
+          // Clear the form fields
+          form.reset();
+        })
+        .withFailureHandler(function(error) {
+          // Re-enable the submit button and restore its text
+          submitButton.disabled = false;
+          submitButton.value = 'Submit';
+          
+          // Display the error message
+          console.error('Error:', error);
+          errorMessage.style.display = 'block';
+        })
+        .handleAdminFormSubmit(
+          document.getElementById('action').value,
+          document.getElementById('row').value,
+          document.getElementById('comments').value
+        );
+    };
+  </script>
+</body>
+</html>

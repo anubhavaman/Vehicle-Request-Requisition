@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vehicle Request Form</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: white;
+      font-family: Arial, sans-serif;
+      padding: 0;
+      box-sizing: border-box;
+      
+    }
+    body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("j.jpg") center center fixed;
+  background-size: cover;
+  opacity: 0.8; /* Set background opacity */
+  z-index: -1; /* Ensure it's behind content */
+}
+
+    #vehicle-request-form {
+      background: hsla(0, 12%, 94%, 0.722);
+      padding: 5px;
+      border-radius: 15px;
+      border: 2px solid rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      width: 110%;
+      max-width: 1000px;
+      height: -8cqmax;
+      margin-top: 40px;
+      margin-block-start: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4CAF50;
+      font-size: 25px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 7px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 1px;
+      color: #555;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    input[type="text"], input[type="date"], input[type="time"], input[type="number"], input[type="email"], select {
+      width: 100%;
+      padding: 3px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, 
+    input[type="number"]:focus, input[type="email"]:focus, select:focus {
+      outline: none;
+      border-color: #3498db;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+      width: 100%;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    #success-message {
+      text-align: center;
+      color: #27ae60;
+      font-weight: bold;
+      margin-top: 20px;
+      display: none;
+      padding: 10px;
+      background-color: #e8f8f5;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 5px;
+      display: block;
+    }
+
+    input[type="email"] {
+      background-color: #333;  /* Dark background */
+      color: white;  /* White text color */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="email"]:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+      outline: none;
+    }
+    #leftImage{
+      width: 120px; /* Adjust size as needed */
+      height: auto;
+      margin-left: 410px;
+      margin-bottom: -20px;
+    }
+    
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="vehicle-request-form">
+    <img id="leftImage" src="https://drive.google.com/thumbnail?id=1XV6OccNww2t-qBXs7CKH6dHSnGuW8SJe&sz=s4000" alt="Left Image">
+    <h2>Vehicle Request Form</h2>
+    <form id="form">
+      <div class="form-grid">
+        <!-- Form fields start here -->
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required maxlength="30" pattern="[A-Za-z0-9 .,\\-]*" title="Only letters, numbers, spaces, dots, commas, and dashes are allowed.">
+        </div>
+        <div class="form-group">
+          <label for="department">Department</label>
+          <input type="text" id="department" name="department" required maxlength="30" pattern="[A-Za-z0-9 .,\\-]*" title="Only letters, numbers, spaces, dots, commas, and dashes are allowed.">
+        </div>
+        <div class="form-group">
+          <label for="dateRequested">Date Requested</label>
+          <input type="date" id="dateRequested" name="dateRequested" required>
+          <span id="dateRequestedError" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="leavingFrom">Leaving From</label>
+          <input type="text" id="leavingFrom" name="leavingFrom" required maxlength="50" pattern="[A-Za-z0-9 .,\\-]*" title="Only letters, numbers, spaces, dots, commas, and dashes are allowed.">
+        </div>
+        <div class="form-group">
+          <label for="timeLeaving">Time Leaving</label>
+          <input type="time" id="timeLeaving" name="timeLeaving" required>
+        </div>
+        <div class="form-group">
+          <label for="returnDate">Return Date</label>
+          <input type="date" id="returnDate" name="returnDate" required>
+          <span id="returnDateError" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="returnTime">Return Time</label>
+          <input type="time" id="returnTime" name="returnTime" required>
+        </div>
+        <div class="form-group">
+          <label for="destination">Destination</label>
+          <input type="text" id="destination" name="destination" required maxlength="50" pattern="[A-Za-z0-9 .,\\-]*" title="Only letters, numbers, spaces, dots, commas, and dashes are allowed.">
+        </div>
+        <div class="form-group">
+          <label for="event">Purpose</label>
+          <input type="text" id="event" name="event" required maxlength="200" pattern="[A-Za-z0-9 .,\\-]*" title="Only letters, numbers, spaces, dots, commas, and dashes are allowed.">
+        </div>
+        <div class="form-group">
+          <label for="occupants">Number of Occupants</label>
+          <input type="number" id="occupants" name="occupants" required min="1" max="8">
+        </div>
+        <div class="form-group">
+          <label for="extraInfo">Extra Information</label>
+          <input type="text" id="extraInfo" name="extraInfo" maxlength="200" pattern="[A-Za-z0-9 .,\\-]*" title="Only letters, numbers, spaces, dots, commas, and dashes are allowed.">
+        </div>
+        <div class="form-group">
+          <label for="empID">Employee ID</label>
+          <input type="text" id="empID" name="empID" required maxlength="6" pattern="[A-Za-z0-9]*" title="Only letters and numbers are allowed.">
+        </div>
+        <div class="form-group">
+          <label for="requestedBy">Requested By</label>
+          <select id="requestedBy" name="requestedBy" required>
+            <option value="">--Select--</option>
+            <option value="For Self">For Self</option>
+            <option value="For Others">For Others</option>
+          </select>
+          <span id="requestedByError" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required readonly>
+          <span id="emailError" class="error-message"></span>
+        </div>
+      </div>
+      <input type="submit" value="Submit Request">
+    </form>
+    <div id="success-message">Form submitted successfully!</div>
+  </div>
+
+  <script>
+    // Function to populate the email field and set min date
+    function initializeForm() {
+      populateEmail();
+      setMinDate();
+    }
+
+    // Populate email on page load
+    window.onload = initializeForm;
+
+    // Function to populate the email field
+    function populateEmail() {
+      google.script.run.withSuccessHandler(function(email) {
+        if (email) {
+          document.getElementById('email').value = email;
+        } else {
+          // If email is not available, display an error
+          document.getElementById('emailError').textContent = "Unable to retrieve email. Please ensure you are logged in.";
+        }
+      }).getUserEmail();
+    }
+
+    // Function to set the minimum date for Date Requested
+    function setMinDate() {
+      var today = new Date();
+      var year = today.getFullYear();
+      var month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+      var day = String(today.getDate()).padStart(2, '0');
+      var minDate = `${year}-${month}-${day}`;
+      document.getElementById('dateRequested').setAttribute('min', minDate);
+    }
+
+    // Form submission handler
+    document.getElementById('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Retrieve form values
+      var email = document.getElementById('email').value.trim();
+      var leavingFrom = document.getElementById('leavingFrom').value.trim().replace(/\s+/g, '').toLowerCase();
+      var destination = document.getElementById('destination').value.trim().replace(/\s+/g, '').toLowerCase();
+      var dateRequested = new Date(document.getElementById('dateRequested').value);
+      var returnDate = new Date(document.getElementById('returnDate').value);
+      var today = new Date();
+      today.setHours(0, 0, 0, 0); // Set time to midnight
+      var dateRequestedError = document.getElementById('dateRequestedError');
+      var emailError = document.getElementById('emailError');
+      var requestedBy = document.getElementById('requestedBy').value.trim();
+      var requestedByError = document.getElementById('requestedByError');
+
+      // Clear previous error messages
+      dateRequestedError.textContent = "";
+      emailError.textContent = "";
+      requestedByError.textContent = "";
+
+      // Validate Email
+      if (!email) {
+        emailError.textContent = "Email is required.";
+        return;
+      }
+
+      // Validate Requested By
+      if (!requestedBy) {
+        requestedByError.textContent = "Please select who the request is for.";
+        return;
+      }
+
+      // Validate Date Requested is not in the past
+      if (dateRequested < today) {
+        dateRequestedError.textContent = "Date Requested cannot be earlier than today's date.";
+        return;
+      }
+
+      // Validate Return Date is not before Date Requested
+      if (returnDate < dateRequested) {
+        alert("Return Date must be on or after the Date Requested.");
+        return;
+      }
+
+      // Validate Leaving From and Destination are not the same
+      if (leavingFrom === destination) {
+        alert("Leaving From and Destination cannot be the same.");
+        return; // Prevent form submission if they are the same
+      }
+
+      // Disable submit button to prevent multiple submissions
+      var submitButton = this.querySelector('input[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.value = 'Submitting...';
+
+      // Collect form data into an object
+      var formData = new FormData(this);
+      var formObject = {};
+      formData.forEach((value, key) => {
+        formObject[key] = value;
+      });
+
+      // Store the email before resetting
+      var currentEmail = email;
+
+      // Submit the form data to the server
+      google.script.run.withSuccessHandler(function(response) {
+        if (response === "Form submitted successfully!") {
+          document.getElementById('success-message').style.display = 'block';
+          // Reset the form
+          document.getElementById('form').reset();
+          // Restore the email field
+          document.getElementById('email').value = currentEmail;
+          // Reset the min date in case the day has changed
+          setMinDate();
+        } else {
+          // Handle server-side validation errors
+          alert(response);
+        }
+        // Re-enable the submit button
+        submitButton.disabled = false;
+        submitButton.value = 'Submit Request';
+      }).withFailureHandler(function(error) {
+        // Handle client-side or server-side errors
+        alert("An error occurred: " + error.message);
+        // Re-enable the submit button
+        submitButton.disabled = false;
+        submitButton.value = 'Submit Request';
+      }).handleFormSubmit(formObject);
+    });
+  </script>
+
+</body>
+</html>
